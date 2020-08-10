@@ -1,16 +1,20 @@
 ---
 
-- name: epel release
+- name: install epel-release
   yum:
     name: epel-release
 
-- name: docker
+- name: install
   yum:
     name: '{{ docker_packages }}'
+  delay: 10
+  retries: 3
+  register: result
+  until: result is succeeded
 
 - name: enable and start
   systemd:
     name: '{{ item }}'
     enabled: yes
     state: started
-  with_items: '{{ docker services }}'
+  with_items: '{{ docker_services }}'
