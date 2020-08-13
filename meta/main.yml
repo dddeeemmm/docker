@@ -1,6 +1,7 @@
 galaxy_info:
   author: Dmitrij Petrov
-  description: Install Docker, Docker-Compose, Docker-Logrotate, Cockpit, Cockpit-Docker on Centos 7
+  description: Install Docker, Docker-Compose, Docker-Logrotate, Cockpit, Cockpit-Docker.
+               Place template for standalone docker-compose app.
 
   license: MIT
 

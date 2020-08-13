@@ -5,7 +5,7 @@
     name: epel-release
 
 - name: install
-  yum:
+  package:
     name: '{{ docker_packages }}'
   delay: 10
   retries: 3

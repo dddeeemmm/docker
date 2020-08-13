@@ -1,0 +1,27 @@
+---
+
+# https://hub.docker.com/r/wheelybird/openvpn-ldap-otp
+
+- hosts: openvpn
+  vars:
+    docker_service: openvpn
+    docker_image: wheelybird/openvpn-ldap-otp
+    docker_hostname: vpn.domain.org
+    docker_ports:
+      - "1194:1194/udp"
+    docker_volumes:
+      - "./{{ docker_service }}:/etc/openvpn"
+    docker_environments:
+      OVPN_SERVER_CN: '{{ docker_hostname }}'
+      LDAP_URI: ldap://ipa.domain.org
+      LDAP_BASE_DN: dc=domain,dc=org
+      LDAP_BIND_USER_DN: uid=openvpn,cn=users,cn=accounts,dc=domain,dc=org
+      LDAP_BIND_USER_PASS: password
+      LDAP_FILTER: (memberOf=cn=vpn,cn=groups,cn=accounts,dc=domain,dc=org)
+      OVPN_ROUTES: 192.168.0.0 255.255.255.0
+      OVPN_DNS_SERVERS: 192.168.0.1,192.168.0.2
+      OVPN_DNS_SEARCH_DOMAIN: domain.org
+      OVPN_REGISTER_DNS: true
+    docker_cap_add: ['NET_ADMIN']
+  roles:
+    - { name: openvpn-compose,  become: yes, tags: openvpn }

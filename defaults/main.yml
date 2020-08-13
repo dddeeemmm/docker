@@ -1,1 +1,13 @@
 ---
+
+compose_dir: /opt/compose
+docker_version: 3.3
+docker_service: service
+docker_hostname: '{{ ansible_fqdn }}'
+docker_restart: always
+docker_image: ''
+docker_ports: []
+docker_volumes: []
+docker_environment: []
+docker_cap_add: []
+docker_cap_drop: []

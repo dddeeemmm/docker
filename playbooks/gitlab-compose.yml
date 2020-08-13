@@ -1,0 +1,19 @@
+---
+
+# https://hub.docker.com/r/gitlab/gitlab-ce/
+
+- hosts: gitlab
+  vars:
+    docker_service: gitlab
+    docker_image: gitlab/gitlab-ce:12.10.13-ce.0
+    docker_hostname: git.domain.org
+    docker_ports:
+      - "8080:80"
+      - "8443:443"
+      - "8022:22"
+    docker_volumes:
+      - "./{{ docker_service }}/conf:/etc/gitlab"
+      - "./{{ docker_service }}/logs:/var/log/gitlab"
+      - "./{{ docker_service }}/data:/var/opt/gitlab"
+  roles:
+    - { name: docker-compose, become: true, tags: gitlab }

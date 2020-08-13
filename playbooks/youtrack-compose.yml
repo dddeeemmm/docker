@@ -1,0 +1,18 @@
+---
+
+# https://hub.docker.com/r/jetbrains/youtrack
+
+- hosts: youtrack
+  vars:
+    docker_service: youtrack
+    docker_image: jetbrains/youtrack:2020.3.1402
+    docker_hostname: yt.domain.org
+    docker_ports:
+      - "8080:8080"
+    docker_volumes:
+      - './{{ docker_service }}/conf:/opt/youtrack/conf'
+      - './{{ docker_service }}/logs:/opt/youtrack/logs'
+      - './{{ docker_service }}/data:/opt/youtrack/data'
+      - './{{ docker_service }}/backups:/opt/youtrack/backups'
+  roles:
+    - { name: docker-compose,  become: true, tags: youtrack }

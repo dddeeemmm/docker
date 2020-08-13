@@ -1,0 +1,16 @@
+---
+
+- name: make compose dir
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items: '{{ compose_dir }}'
+
+- name: make docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: '{{ compose_dir }}/{{ docker_service }}.yml'
+
+- name: start service
+  command: docker-compose -f {{ compose_dir }}/{{ docker_service }}.yml up -d
+
