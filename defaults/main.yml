@@ -1,11 +1,14 @@
 ---
 
+docker_compose_install: true
 compose_dir: /opt/compose
+compose_template: docker-compose.yml.j2
 docker_version: 3.3
 docker_service: service
 docker_hostname: '{{ ansible_fqdn }}'
 docker_restart: always
 docker_image: ''
+docker_command: []
 docker_ports: []
 docker_volumes: []
 docker_environment: []

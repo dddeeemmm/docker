@@ -1,5 +1,8 @@
 ---
 
 - include: asserts.yml
+
 - include: install.yml
+  when: docker_compose_install
+
 - include: config.yml

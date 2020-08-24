@@ -3,17 +3,20 @@ services:
   {{ docker_service }}:
     image: "{{ docker_image }}"
     restart: {{ docker_restart }}
-    hostname: "{{ docker_hostname }}"
+{% if docker_command is defined and docker_command != [] and docker_command != '' %}
+    command: "{{ docker_command }}"
+{% endif %}
+    hostname: "{{ docker_hostname | d (ansible_fqdn) }}"
     ports: {{ docker_ports }}
-    {% if docker_volumes is defined and docker_volumes != [] and docker_volumes != '' %}
+{% if docker_volumes is defined and docker_volumes != [] and docker_volumes != '' %}
     volumes: {{ docker_volumes }}
-    {% endif %}
-    {% if docker_environment is defined and docker_environment != [] and docker_environment != '' %}
+{% endif %}
+{% if docker_environment is defined and docker_environment != [] and docker_environment != '' %}
     environment: {{ docker_environment }}
-    {% endif %}
-    {% if docker_cap_add is defined and docker_cap_add != [] and docker_cap_add != '' %}
+{% endif %}
+{% if docker_cap_add is defined and docker_cap_add != [] and docker_cap_add != '' %}
     cap_add: {{ docker_cap_add }}
-    {% endif %}
-    {% if docker_cap_drop is defined and docker_cap_drop != [] and docker_cap_drop != '' %}
+{% endif %}
+{% if docker_cap_drop is defined and docker_cap_drop != [] and docker_cap_drop != '' %}
     cap-drop: {{ docker_cap_drop }}
-    {% endif %}
+{% endif %}
