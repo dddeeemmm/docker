@@ -6,3 +6,5 @@
   when: docker_compose_install
 
 - include: config.yml
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

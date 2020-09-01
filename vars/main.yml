@@ -4,9 +4,17 @@ docker_packages:
   - docker
   - docker-compose
   - docker-logrotate
-  - cockpit
-  - cockpit-docker
+#  - cockpit
+#  - cockpit-docker
 
 docker_services:
   - docker
-  - cockpit
+#  - cockpit
+
+docker_registry_url: '{{ docker_registry_local_url }}'
+docker_registry_username: '{{ docker_registry_local_username }}'
+docker_registry_password: '{{ docker_registry_local_password }}'
+
+docker_pip_modules:
+#  - docker-py
+  - docker-compose==1.9.0

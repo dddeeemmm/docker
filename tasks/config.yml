@@ -1,16 +1,31 @@
 ---
 
+- name: docker login
+  docker_login:
+    registry: '{{ docker_registry_url }}'
+    username: '{{ docker_registry_username }}'
+    password: '{{ docker_registry_password }}'
+    reauthorize: yes
+  when: docker_registry_local
+
 - name: make compose dir
   file:
     path: '{{ item }}'
     state: directory
-  with_items: '{{ compose_dir }}'
+  with_items: '{{ docker_compose_dir }}'
 
 - name: make docker-compose.yml
   template:
-    src: '{{ compose_template }}'
-    dest: '{{ compose_dir }}/{{ docker_service }}.yml'
+    src: '{{ docker_compose_template }}'
+    dest: '{{ docker_compose_dir }}/{{ docker_service }}.yml'
+
+#- name: start service
+#  command: docker-compose -f {{ docker_compose_dir }}/{{ docker_service }}.yml up -d
+#  when: docker_compose_start
 
 - name: start service
-  command: docker-compose -f {{ compose_dir }}/{{ docker_service }}.yml up -d
+  docker_compose:
+    project_src: '{{ docker_compose_dir }}'
+    files: '{{ docker_service }}.yml'
+    restarted: true
 
